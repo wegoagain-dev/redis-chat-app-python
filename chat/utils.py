@@ -6,6 +6,7 @@ import bcrypt
 
 from chat import demo_data
 from chat.config import get_config
+from chat.initialize import initialize_redis
 
 SERVER_ID = random.uniform(0, 322321)
 
@@ -83,12 +84,11 @@ def init_redis():
     if not total_users_exist:
         # This counter is used for the id
         redis_client.set("total_users", 0)
-        # Some rooms have pre-defined names. When the clients attempts to fetch a room, an additional lookup
-        # is handled to resolve the name.
-        # Rooms with private messages don't have a name
-        redis_client.set(f"room:0:name", "General")
-
+        # Create demo users first
         demo_data.create()
+        # Initialize rooms and messages
+        initialize_redis(redis_client)
+
 
 # We use event stream for pub sub. A client connects to the stream endpoint and listens for the messages
 
@@ -103,6 +103,9 @@ def event_stream():
             continue
 
         data = "data:  %s\n\n" % json.dumps(
-            {"type": message_parsed["type"], "data": message_parsed["data"],}
+            {
+                "type": message_parsed["type"],
+                "data": message_parsed["data"],
+            }
         )
         yield data

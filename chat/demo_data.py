@@ -73,5 +73,8 @@ def create():
 
     for key, message in enumerate(messages):
         add_message(
-            "0", random_user_id(), message, time.time() - ((len(messages) - key) * 200),
+            "0",
+            random_user_id(),
+            message,
+            time.time() - ((len(messages) - key) * 200),
         )
