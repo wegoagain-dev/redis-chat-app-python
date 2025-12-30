@@ -1,5 +1,5 @@
-# Use Python37
-FROM python:3.7
+# Use Python 3.11
+FROM python:3.11
 
 # Copy requirements.txt to the docker image and install packages
 COPY requirements.txt /

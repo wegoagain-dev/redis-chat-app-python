@@ -24,7 +24,7 @@ def create_user(username, password):
     next_id = redis_client.incr("total_users")
     user_key = f"user:{next_id}"
     redis_client.set(username_key, user_key)
-    redis_client.hmset(user_key, {"username": username, "password": hashed_password})
+    redis_client.hset(user_key, mapping={"username": username, "password": hashed_password})
 
     redis_client.sadd(f"user:{next_id}:rooms", "0")
 

@@ -15,7 +15,6 @@ jobs:
       ECR_REPOSITORY: my-chat-app # The name of my ECR repo
       # This will be the full AWS URI, e.g., 12345.dkr.ecr.eu-west-2.amazonaws.com (make sure you put your region here if different)
       ECR_REGISTRY: ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.eu-west-2.amazonaws.com
-      # I had an issue where using env.AWS_REGION in the ECR_REGISTRY variable caused an error. Instead, I used the AWS_REGION variable directly. You cant use env variables at jobs level. (research this)
 
     steps:
       # 3. Get my code
